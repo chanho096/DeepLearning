@@ -1,22 +1,6 @@
-#pragma once
-#include <iostream>
-#include <string>
-#include "Matrix.h"
+#include "Test_Matrix.h"
 
-using std::cout; using std::ostream; using std::endl; 
-using std::string;
-using namespace alg;
-
-int MatrixTest();
-ostream& operator << (ostream& os, const Matrix& trg);
-void arrangeMatrix(Matrix& trg);
-
-int main() {
-	MatrixTest();
-	return 0;
-}
-
-int MatrixTest() {
+int Test_Matrix() {
 	Matrix mat1, mat2, mat3, vec1, vec2;
 	
 	cout << " [ 1 ]" << endl;
@@ -146,7 +130,7 @@ int MatrixTest() {
 
 ostream& operator << (ostream& os, const Matrix& trg) {
 	int i, j, row, col;
-	row = trg.getRow(); col = trg.getColumn();
+	row = trg.getNRows(); col = trg.getNColumns();
 	for (i = 0; i < row; ++i) {
 		os << "[ ";
 		for (j = 0; j < col; ++j) {
@@ -159,7 +143,7 @@ ostream& operator << (ostream& os, const Matrix& trg) {
 
 void arrangeMatrix(Matrix& trg) {
 	int i, j, row, col, num;
-	row = trg.getRow(); col = trg.getColumn();
+	row = trg.getNRows(); col = trg.getNColumns();
 	num = 0;
 	for (i = 0; i < row; ++i)
 		for (j = 0; j < col; ++j)

@@ -30,8 +30,8 @@ namespace alg {
 
 		// accessor
 		int getSize() const { return size; }
-		int getRow() const { return num_rows; }
-		int getColumn() const { return num_cols; }
+		int getNRows() const { return num_rows; }
+		int getNColumns() const { return num_cols; }
 		const R& operator () (const int& m, const int&n) const;
 
 		// basic function
@@ -55,7 +55,7 @@ namespace alg {
 		const Matrix operator > (const R& trg) const;
 		const Matrix operator >= (const R& trg) const;
 
-	private:
+	protected:
 		int num_rows, num_cols, size;
 		R* values;
 

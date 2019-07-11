@@ -9,6 +9,7 @@ namespace alg {
 	}
 
 	void Matrix::initialize(const int& m, const int& n, const bool init) {
+		assert(m > 0 && n > 0);
 		const int old_size = size;
 		num_rows = m; num_cols = n;
 		size = num_rows * num_cols;
