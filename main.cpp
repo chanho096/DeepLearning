@@ -1,6 +1,7 @@
-#include "Test_Matrix.h"
-
+#include "Test_FNNInitialize.h"
+using fnn::Layer;
 int main() {
-	Test_Matrix();
+	Test_FNN();
 	return 0;
 }
+//

@@ -21,6 +21,19 @@ namespace alg {
 
 	}
 
+	R ExMatrix::average() {
+		R avg = R(0);
+		for (int i = 0; i < size; ++i) avg += values[i];
+		return avg / size;
+	}
+
+	R ExMatrix::variance()
+	{
+		R var = R(0); R avg = average();
+		for (int i = 0; i < size; ++i) var += values[i] * values[i];
+		return (var / size) - (avg * avg);
+	}
+
 	void ExMatrix::ReLU() {
 		for (int i = 0; i < size; ++i) {
 			values[i] = actf::ReLU(values[i]);

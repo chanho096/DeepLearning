@@ -19,6 +19,9 @@ namespace alg {
 		void randomize(const R& scale, const R& min);
 		void normalize(const R& min, const int& aixs);
 		
+		R average();
+		R variance();
+
 		void ReLU();
 		void dReLU();
 		void Sigmoid();

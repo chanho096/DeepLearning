@@ -1,4 +1,6 @@
 #include "NeuralNetwork.h"
+#include <cstdlib>
+#include <time.h>
 
 namespace fnn {
 	using actf::ActfType;
@@ -34,35 +36,40 @@ namespace fnn {
 	}
 
 	void NeuralNetwork::initialize() {
+		assert(hp.num_layers > 1);
+		// Data Update
+		NeuralNetwork::num_input = hp.num_neurons[0];
+		NeuralNetwork::num_layers = hp.num_layers;
+		
 		// Creating Layer
 		Layer_Delete();
-		layer = new Layer*[hp.num_layers];
-		for (int i = 0; i < hp.num_layers; ++i) layer[i] = new Layer();
-		for (int i = 1; i < hp.num_layers; ++i) layer[i]->rebuild(hp.num_neurons[i], hp.num_neurons[i - 1]);
+		layer = new Layer*[num_layers];
+		for (int i = 0; i < num_layers; ++i) layer[i] = new Layer();
+		for (int i = 1; i < num_layers; ++i) layer[i]->rebuild(hp.num_neurons[i], hp.num_neurons[i - 1]);
 
 		// Initialize
+		srand((unsigned int)time(NULL));
 		Layer_Initialize();
 		Weight_Initialize();
 	}
 
 	void NeuralNetwork::Layer_Delete() {
 		if (layer == nullptr) return;
-		for (int i = 0; i < hp.num_layers + 1; ++i) SAFE_DELETE(layer[i]);
+		for (int i = 0; i < hp.num_layers; ++i) SAFE_DELETE(layer[i]);
 		SAFE_DELETE_ARRAY(layer);
 	}
 
 	void NeuralNetwork::Layer_Initialize() {
 		// basic activate function : ReLU
-		for (int i = 0; i < hp.num_layers - 1; ++i) layer[i]->setActf(ActfType::TReLU);
+		for (int i = 0; i < num_layers - 1; ++i) layer[i]->setActf(ActfType::TReLU);
 
 		// output activate function : Sigmoid
-		layer[hp.num_layers - 1]->setActf(ActfType::TSigmoid);
+		layer[num_layers - 1]->setActf(ActfType::TSigmoid);
 	}
 
 	void NeuralNetwork::Weight_Initialize() {
 		// Use He Initialization for ReLU activation
-		for (int i = 1; i < hp.num_layers - 1; ++i) layer[i]->He_Initialize(hp.num_neurons[i], hp.num_neurons[i + 1]);
-		layer[hp.num_layers - 1]->He_Initialize(hp.num_layers - 2, 0);
+		for (int i = 1; i < num_layers; ++i) layer[i]->He_Initialize(hp.num_neurons[i]);
 	}
 	
 }

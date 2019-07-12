@@ -6,6 +6,7 @@
 namespace fnn {
 	void Layer::rebuild(const int& num_neurons, const int& fan_in) {
 		Layer::num_neurons = num_neurons;
+		if (fan_in <= 0) return;
 		w.initialize(num_neurons, fan_in);
 		b.initialize(num_neurons, 1);
 	}
@@ -15,7 +16,7 @@ namespace fnn {
 		w.randomize(tmp * 2, tmp * -1);
 	}
 
-	void Layer::He_Initialize(const R& fan_in, const R& fan_out) {
+	void Layer::He_Initialize(const R& fan_in) {
 		R tmp = sqrt((R)6.0 / fan_in);
 		w.randomize(tmp * 2, tmp * -1);
 	}

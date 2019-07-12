@@ -21,7 +21,7 @@ namespace fnn {
 		int getNNeurons(const int& layer) const { return num_neurons[layer]; }
 		
 		// mutator
-		void setNNeurons(const int& value, const int& layer) { num_neurons[layer] = value; }
+		void setNNeurons(const int& layer, const int& value) { num_neurons[layer] = value; }
 
 		// Hyper Parameter
 		R learning_rate;
@@ -33,8 +33,9 @@ namespace fnn {
 
 	class NeuralNetwork {
 	public:
-		NeuralNetwork(const HyperParameter& hp, const int& num_input)
-			: hp(hp), num_input(num_input), layer(nullptr) { initialize(); };
+		NeuralNetwork() : layer(nullptr), num_input(0), num_layers(0) {}
+		NeuralNetwork(const HyperParameter& hp)
+			: hp(hp), layer(nullptr), num_input(0), num_layers(0) { initialize(); }
 		virtual ~NeuralNetwork() { Layer_Delete(); }
 		
 		void initialize();
@@ -43,7 +44,7 @@ namespace fnn {
 	protected:
 		HyperParameter hp;
 		Layer** layer;
-		int num_input;
+		int num_input, num_layers;
 
 		// initialize
 		void Layer_Delete();
@@ -51,7 +52,7 @@ namespace fnn {
 		virtual void Weight_Initialize();
 
 		// main function
-		void Forward_Propagation();
-		void Backward_Propagation();
+		//void Forward_Propagation();
+		//void Backward_Propagation();
 	};
 }

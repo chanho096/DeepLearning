@@ -14,6 +14,7 @@ namespace fnn {
 		const ExMatrix& getWeight() const { return w; }
 		const ExMatrix& getBias() const { return b; }
 		ActfType getActf() const { return actf; }
+		int getNNeurons() const { return num_neurons; }
 
 		// mutator
 		void rebuild(const int& num_neurons, const int& fan_in);
@@ -21,12 +22,12 @@ namespace fnn {
 
 		// weight initialize
 		void Xavier_Initailize(const R& fan_in, const R& fan_out);
-		void He_Initialize(const R& fan_in, const R& fan_out);
+		void He_Initialize(const R& fan_in);
 
 	protected:
 		int num_neurons;
 		ActfType actf;
-
+		  
 		ExMatrix w, b; // weight, bias
 		ExMatrix f, grad;
 	};
