@@ -8,7 +8,7 @@ using fnn::NeuralNetwork;
 std::ostream& operator << (std::ostream&, actf::ActfType);
 int Test_FNN();
 
-// Using ReLU / He Initialize
+// using ReLU / He Initialize
 class FNN_Test : public NeuralNetwork {
 public:
 	FNN_Test() : NeuralNetwork() {}
@@ -20,7 +20,7 @@ protected:
 	virtual void test_weightInit(const int& layer);
 };
 
-// Using Sigmoid / Xavier Initialize 
+// using Sigmoid / Xavier Initialize 
 class FNN_Test_Sigmoid : public FNN_Test {
 public:
 	FNN_Test_Sigmoid(const HyperParameter& hp) : FNN_Test() { initialize(hp); }

@@ -122,7 +122,7 @@ void FNN_Test_Sigmoid::test_weightInit(const int &layer) {
 }
 
 void FNN_Test_Sigmoid::Layer_Initialize() {
-	// activate function : Sigmoid
+	// activation function : Sigmoid
 	for (int i = 0; i < num_layers; ++i) layer[i]->setActf(ActfType::TSigmoid);
 }
 

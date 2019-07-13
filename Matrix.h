@@ -43,7 +43,8 @@ namespace alg {
 
 		// operation
 		void product(const Matrix& trg, Matrix& result) const;
-		void productTransposed(const Matrix& trg, Matrix& result) const;
+		void productTransposed(const Matrix& trg, Matrix& result) const; // transpose target matrix
+		void productWithTranspose(const Matrix& trg, Matrix& result) const; // transpose current matrix
 		void multiply(const Matrix& trg);
 		void multiply(const R& trg);
 		void addition(const Matrix& trg);

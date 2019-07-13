@@ -41,10 +41,13 @@ namespace fnn {
 		void initialize();
 		void initialize(const HyperParameter& hp) { NeuralNetwork::hp = hp; initialize(); }
 
+		void learning(const ExMatrix& input, const ExMatrix& lable);
+		R softmax(const ExMatrix& input);
+
 	protected:
 		HyperParameter hp;
 		Layer** layer;
-		int num_input, num_layers;
+		int num_input, num_output, num_layers;
 
 		// initialize
 		void Layer_Delete();
@@ -52,7 +55,8 @@ namespace fnn {
 		virtual void Weight_Initialize();
 
 		// main function
-		//void Forward_Propagation();
-		//void Backward_Propagation();
+		void Forward_Propagation(const ExMatrix& input);
+		void Backward_Propagation(const ExMatrix& lable);
+		void Weight_Update();
 	};
 }

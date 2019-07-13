@@ -52,6 +52,7 @@ int Test_Matrix() {
 	system("pause");
 	system("cls");
 	cout << " [ 5 ]" << endl;
+
 	cout << "* Matrix 3 = Matrix 1 * Matrix 2 (matrix transposed product)" << endl;
 	mat1.productTransposed(mat2, mat3);
 	cout << "Matrix 1: " << endl << mat1 << endl;
@@ -61,6 +62,16 @@ int Test_Matrix() {
 	system("pause");
 	system("cls");
 	cout << " [ 6 ]" << endl;
+
+	cout << "* Matrix 3 = Matrix 2 * Matrix 1 (matrix transpose and product)" << endl;
+	mat2.productWithTranspose(mat1, mat3);
+	cout << "Matrix 2: " << endl << mat2 << endl;
+	cout << "Matrix 1: " << endl << mat1 << endl;
+	cout << "Matrix 3: " << endl << mat3 << endl;
+
+	system("pause");
+	system("cls");
+	cout << " [ 7 ]" << endl;
 
 	cout << "Matrix 1: " << endl << mat1 << endl;
 	cout << "Matrix 2: " << endl << mat2 << endl;
@@ -75,7 +86,7 @@ int Test_Matrix() {
 
 	system("pause");
 	system("cls");
-	cout << " [ 7 ]" << endl;
+	cout << " [ 8 ]" << endl;
 	cout << "Matrix 1: " << endl << mat1 << endl;
 	
 	cout << "* Vector 1 = Horizontal Summation of Matrix 1" << endl;
@@ -88,7 +99,7 @@ int Test_Matrix() {
 
 	system("pause");
 	system("cls");
-	cout << " [ 8 ]" << endl;
+	cout << " [ 9 ]" << endl;
 
 	cout << "* Matrix 1 = Matrix 1 * Vector 1 (element-wise multiply)" << endl;
 	cout << "Matrix 1: " << endl << mat1 << endl;
@@ -98,7 +109,7 @@ int Test_Matrix() {
 
 	system("pause");
 	system("cls");
-	cout << " [ 9 ]" << endl;
+	cout << " [ 10 ]" << endl;
 
 	cout << "* Matrix 2 = Matrix 2 + Vector 2 (element-wise addition)" << endl;
 	cout << "Matrix 2: " << endl << mat2 << endl;
@@ -108,7 +119,7 @@ int Test_Matrix() {
 
 	system("pause");
 	system("cls");
-	cout << " [ 10 ]" << endl;
+	cout << " [ 11 ]" << endl;
 	cout << "* Matrix 3 = Matrix 1 < 5000 (element-wise threshold)" << endl;
 	mat3 = mat1 < 5000;
 	cout << "Matrix 1: " << endl << mat1 << endl;

@@ -127,6 +127,24 @@ namespace alg {
 		}
 	}
 
+	void Matrix::productWithTranspose(const Matrix &trg, Matrix & result) const {
+		int row, col, dim, idx1, idx2;
+		result.initialize(num_cols, trg.num_cols, false);
+		assert(num_rows == trg.num_rows);
+
+		for (row = 0; row < result.num_rows; ++row) {
+			idx1 = row * result.num_cols;
+			for (col = 0; col < result.num_cols; ++col) {
+				idx2 = idx1 + col;
+				result.values[idx2] = (R)0;
+
+				for (dim = 0; dim < num_rows; ++dim) {
+					result.values[idx2] += values[row + dim * num_cols] * trg.values[col + dim * trg.num_cols];
+				}
+			}
+		}
+	}
+
 	void Matrix::multiply(const Matrix& trg) {
 		if (num_rows == trg.num_rows && num_cols == trg.num_cols) {
 			for (int i = 0; i < size; ++i) {
