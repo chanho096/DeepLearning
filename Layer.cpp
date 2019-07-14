@@ -26,12 +26,12 @@ namespace fnn {
 		f.copy(input);
 	}
 
-	void Layer::Set_Gradient(const ExMatrix &lable, const Layer* const prev) {
+	void Layer::Set_Gradient(const ExMatrix &label, const Layer* const prev) {
 		// set gradient of output layer.
-		// Cross-Entropy loss function and Sigmoid (in output layer) are assumed.
-		assert(lable.getNRows() == num_neurons);
-		assert(lable.getNColumns() == f.getNColumns());
-		Layer::grad_z.copy(lable);
+		// Cross-Entropy loss function and Softmax are assumed.
+		assert(label.getNRows() == num_neurons);
+		assert(label.getNColumns() == f.getNColumns());
+		Layer::grad_z.copy(label);
 		grad_z.multiply((R)-1);
 		grad_z.addition(f);
 		getGradientOfParameter(prev);
@@ -65,6 +65,8 @@ namespace fnn {
 			f.Sigmoid(); break;
 		case ActfType::TReLU:
 			f.ReLU(); break;
+		case ActfType::TSoftmax:
+			softmax(); break;
 		}
 	}
 
@@ -78,13 +80,21 @@ namespace fnn {
 	}
 
 	void Layer::getGradientOfParameter(const Layer* const prev) {
-		R m = grad_z.getNColumns(); m = 1 / m;
-		assert(m == prev->f.getNColumns());
-
+		R m = (R)grad_z.getNColumns(); 
+		assert(grad_z.getNColumns() == prev->f.getNColumns()); 
+		
+		m = 1 / m;
 		grad_z.productTransposed(prev->f, grad_w);
 		grad_z.sum(grad_b, 1);
 
 		grad_w.multiply(m);
 		grad_b.multiply(m);
+	}
+	void Layer::softmax() {
+		ExMatrix sum;
+		f.exp();
+		f.sum(sum, 0);
+		sum.reverse();
+		f.multiply(sum); // element-wise product
 	}
 }

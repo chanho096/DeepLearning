@@ -1,6 +1,6 @@
 #pragma once
 #include "Matrix.h"
-
+#
 namespace alg {
 	// Extended Matrix for Feed-Forward Neural Network
 	class ExMatrix : public Matrix {
@@ -26,5 +26,9 @@ namespace alg {
 		void dReLU();
 		void Sigmoid();
 		void dSigmoid();
+
+		// math library
+		void log();
+		void exp();
 	};
 }

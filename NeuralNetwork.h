@@ -41,8 +41,8 @@ namespace fnn {
 		void initialize();
 		void initialize(const HyperParameter& hp) { NeuralNetwork::hp = hp; initialize(); }
 
-		void learning(const ExMatrix& input, const ExMatrix& lable);
-		R softmax(const ExMatrix& input);
+		R learning(const ExMatrix& input, const ExMatrix& label, const bool getCost = false);
+		const ExMatrix activate(const ExMatrix& input);
 
 	protected:
 		HyperParameter hp;
@@ -56,7 +56,9 @@ namespace fnn {
 
 		// main function
 		void Forward_Propagation(const ExMatrix& input);
-		void Backward_Propagation(const ExMatrix& lable);
+		void Backward_Propagation(const ExMatrix& label);
 		void Weight_Update();
+		const ExMatrix Loss_Function(const ExMatrix& yhat, const ExMatrix& y) const;
+		R Cost_Function(const ExMatrix& label) const;
 	};
 }

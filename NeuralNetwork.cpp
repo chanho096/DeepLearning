@@ -37,6 +37,7 @@ namespace fnn {
 
 	void NeuralNetwork::initialize() {
 		assert(hp.num_layers > 2);
+		assert(hp.num_neurons[hp.num_layers - 1] > 1);
 		// data update
 		NeuralNetwork::num_input = hp.num_neurons[0];
 		NeuralNetwork::num_output = hp.num_neurons[hp.num_layers - 1];
@@ -47,27 +48,37 @@ namespace fnn {
 		layer = new Layer*[num_layers];
 		for (int i = 0; i < num_layers; ++i) layer[i] = new Layer();
 		for (int i = 1; i < num_layers; ++i) layer[i]->rebuild(hp.num_neurons[i], hp.num_neurons[i - 1]);
+		layer[0]->rebuild(hp.num_neurons[0], 0);
 
 		// layer Initialize
 		srand((unsigned int)time(NULL));
 		Layer_Initialize();
 
-		// output activation function : Sigmoid
-		layer[num_layers - 1]->setActf(ActfType::TSigmoid);
+		// output activation function : Softmax
+		layer[num_layers - 1]->setActf(ActfType::TSoftmax);
 
 		// weight Initialize
 		Weight_Initialize();
 	}
 
-	void NeuralNetwork::learning(const ExMatrix &input, const ExMatrix &lable) {
+	R NeuralNetwork::learning(const ExMatrix& input, const ExMatrix& label, const bool getCost) {
 		assert(num_input == input.getNRows());
-		assert(num_output == lable.getNRows());
-		assert(input.getNColumns() == lable.getNColumns());
+		assert(num_output == label.getNRows());
+		assert(input.getNColumns() == label.getNColumns());
 
 		Forward_Propagation(input);
-		Backward_Propagation(lable);
+		Backward_Propagation(label);
 		Weight_Update(); // gradient descent
 
+		if (getCost)
+			return Cost_Function(label);
+		return (R)0;
+	}
+
+	const ExMatrix NeuralNetwork::activate(const ExMatrix& input) {
+		assert(input.getNRows() == layer[0]->getNNeurons());
+		Forward_Propagation(input);
+		return layer[num_layers - 1]->getActiveValue();
 	}
 
 	void NeuralNetwork::Layer_Delete() {
@@ -92,16 +103,38 @@ namespace fnn {
 			layer[i]->Forward_Propagation(layer[i - 1]);
 	}
 
-	void NeuralNetwork::Backward_Propagation(const ExMatrix& lable) {
+	void NeuralNetwork::Backward_Propagation(const ExMatrix& label) {
 		assert(num_layers > 2);
-		// Cross-Entropy loss function and Sigmoid (in output layer) are assumed.
-		layer[num_layers - 1]->Set_Gradient(lable, layer[num_layers - 2]);
-		for (int i = num_layers - 2; i > 0; ++i)
+		// Cross-Entropy loss function and Softmax are assumed.
+		layer[num_layers - 1]->Set_Gradient(label, layer[num_layers - 2]);
+		for (int i = num_layers - 2; i > 0; --i)
 			layer[i]->Backward_Propagation(layer[i - 1], layer[i + 1]);
 	}
 	
 	void NeuralNetwork::Weight_Update() {
 		for (int i = 1; i < num_layers; ++i)
 			layer[i]->Weight_Update(hp.learning_rate);
+	}
+
+	const ExMatrix NeuralNetwork::Loss_Function(const ExMatrix& yhat, const ExMatrix& y) const {
+		assert(yhat.getNRows() == y.getNRows());
+		assert(yhat.getNColumns() == y.getNColumns());
+
+		// Cross-Entropy loss function with Softmax.
+		ExMatrix tmp, result;
+		tmp.copy(yhat);
+		tmp.log();
+		tmp.multiply(y);
+		tmp.multiply(-1);
+		tmp.sum(result, 0);
+
+		return result;
+	}
+
+	R NeuralNetwork::Cost_Function(const ExMatrix& label) const {
+		ExMatrix result;
+		(Loss_Function(layer[num_layers - 1]->getActiveValue(), label)).sum(result, 1);
+		assert(result.getSize() == 1);
+		return result(0, 0) / label.getNColumns();
 	}
 }

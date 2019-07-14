@@ -1,6 +1,7 @@
 #include "ExtendedMatrix.h"
 #include "ActivationFunction.h"
 #include <cstdlib>
+#include <cmath>
 
 namespace alg {
 	void ExMatrix::randomize() {
@@ -55,6 +56,18 @@ namespace alg {
 	void ExMatrix::dSigmoid() {
 		for (int i = 0; i < size; ++i) {
 			values[i] = actf::dSigmoid(values[i]);
+		}
+	}
+
+	void ExMatrix::log() {
+		for (int i = 0; i < size; ++i) {
+			values[i] = (R)std::log(values[i]);
+		}
+	}
+
+	void ExMatrix::exp() {
+		for (int i = 0; i < size; ++i) {
+			values[i] = (R)std::exp(values[i]);
 		}
 	}
 }

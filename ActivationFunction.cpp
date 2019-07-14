@@ -1,5 +1,5 @@
 #include "ActivationFunction.h"
-#include <math.h>
+#include <cmath>
 
 namespace actf {
 	R ReLU(const R& x) {
@@ -19,4 +19,5 @@ namespace actf {
 	R dSigmoid(const R& y) {
 		return ((R)1 - y) * y;
 	}
+
 }

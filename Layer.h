@@ -27,7 +27,7 @@ namespace fnn {
 
 		// main function
 		void Set_Input(const ExMatrix& input); // use for input-layer
-		void Set_Gradient(const ExMatrix& lable, const Layer* const prev); // use for output-layer
+		void Set_Gradient(const ExMatrix& label, const Layer* const prev); // use for output-layer
 		void Forward_Propagation(const Layer* const prev);
 		void Backward_Propagation(const Layer* const prev, const Layer* const next);
 		void Weight_Update(const R learning_rate);
@@ -43,5 +43,6 @@ namespace fnn {
 		void activate();
 		void getGradientOfActf();
 		void getGradientOfParameter(const Layer* const prev);
+		void softmax();
 	};
 }

@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include <math.h>
 
 namespace alg {
 	void Matrix::initialize() {
