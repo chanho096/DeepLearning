@@ -7,9 +7,8 @@ namespace actf {
 	}
 
 	R dReLU(const R& x) {
-		if (x > (R)0) return (R)1;
+		if (x > (R)0) return x;
 		return (R)0;
-
 	}
 
 	R Sigmoid(const R& x) {

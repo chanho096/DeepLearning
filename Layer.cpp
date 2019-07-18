@@ -11,7 +11,7 @@ namespace fnn {
 		b.initialize(num_neurons, 1);
 	}
 
-	void Layer::Xavier_Initailize(const R& fan_in, const R& fan_out) {
+	void Layer::Xavier_Initialize(const R& fan_in, const R& fan_out) {
 		R tmp = sqrt((R)6.0 / (fan_in + fan_out));
 		w.randomize(tmp * 2, tmp * -1);
 	}
@@ -19,6 +19,7 @@ namespace fnn {
 	void Layer::He_Initialize(const R& fan_in) {
 		R tmp = sqrt((R)6.0 / fan_in);
 		w.randomize(tmp * 2, tmp * -1);
+
 	}
 
 	void Layer::Set_Input(const ExMatrix &input) {
@@ -47,11 +48,13 @@ namespace fnn {
 	void Layer::Backward_Propagation(const Layer* const prev, const Layer* const next) {
 		next->w.productWithTranspose(next->grad_z, grad_z);
 		getGradientOfActf();
+		grad_z.multiply(z_tmp);
 		getGradientOfParameter(prev);
 	}
 
 	void Layer::Weight_Update(const R learning_rate) {
 		R alpha = learning_rate * -1;
+
 		grad_w.multiply(alpha);
 		w.addition(grad_w);
 
@@ -73,6 +76,7 @@ namespace fnn {
 	void Layer::getGradientOfActf() {
 		switch (actf) {
 		case ActfType::TSigmoid:
+			z_tmp.copy(f);
 			z_tmp.dSigmoid(); break;
 		case ActfType::TReLU:
 			z_tmp.dReLU(); break;

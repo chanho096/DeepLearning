@@ -27,7 +27,7 @@ namespace fnn {
 		R learning_rate;
 
 	private:
-		int num_layers; // number of layers (input layer + hidden layer + 
+		int num_layers; // number of layers (input layer + hidden layer + output layer)
 		int* num_neurons;
 	};
 

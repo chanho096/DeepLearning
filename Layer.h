@@ -16,13 +16,13 @@ namespace fnn {
 		const ExMatrix& getActiveValue() const { return f; }
 		ActfType getActf() const { return actf; }
 		int getNNeurons() const { return num_neurons; }
-
+		
 		// mutator
 		void rebuild(const int& num_neurons, const int& fan_in);
 		void setActf(const ActfType& actf) { Layer::actf = actf; }
 
 		// weight initialize
-		void Xavier_Initailize(const R& fan_in, const R& fan_out);
+		void Xavier_Initialize(const R& fan_in, const R& fan_out);
 		void He_Initialize(const R& fan_in);
 
 		// main function

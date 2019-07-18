@@ -128,6 +128,6 @@ void FNN_Test_Sigmoid::Layer_Initialize() {
 
 void FNN_Test_Sigmoid::Weight_Initialize() {
 	// Use Xavier Initialization
-	for (int i = 1; i < num_layers - 1; ++i) layer[i]->Xavier_Initailize(hp.getNNeurons(i), hp.getNNeurons(i + 1));
-	layer[num_layers - 1]->Xavier_Initailize(hp.getNNeurons(num_layers - 1), 0);
+	for (int i = 1; i < num_layers - 1; ++i) layer[i]->Xavier_Initialize(hp.getNNeurons(i), hp.getNNeurons(i + 1));
+	layer[num_layers - 1]->Xavier_Initialize(hp.getNNeurons(num_layers - 1), 0);
 }

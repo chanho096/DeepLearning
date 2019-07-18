@@ -1,6 +1,5 @@
 #include "NeuralNetwork.h"
 #include <cstdlib>
-#include <time.h>
 
 namespace fnn {
 	using actf::ActfType;
@@ -51,7 +50,6 @@ namespace fnn {
 		layer[0]->rebuild(hp.num_neurons[0], 0);
 
 		// layer Initialize
-		srand((unsigned int)time(NULL));
 		Layer_Initialize();
 
 		// output activation function : Softmax
@@ -67,7 +65,7 @@ namespace fnn {
 		assert(input.getNColumns() == label.getNColumns());
 
 		Forward_Propagation(input);
-		Backward_Propagation(label);
+  		Backward_Propagation(label);
 		Weight_Update(); // gradient descent
 
 		if (getCost)
@@ -130,7 +128,7 @@ namespace fnn {
 
 		return result;
 	}
-
+	  
 	R NeuralNetwork::Cost_Function(const ExMatrix& label) const {
 		ExMatrix result;
 		(Loss_Function(layer[num_layers - 1]->getActiveValue(), label)).sum(result, 1);

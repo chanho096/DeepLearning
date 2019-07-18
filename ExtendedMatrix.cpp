@@ -14,7 +14,8 @@ namespace alg {
 	void ExMatrix::randomize(const R& scale, const R& min) {
 		//srand((unsigned int)time(NULL));
 		for (int i = 0; i < size; ++i) {
-			values[i] = (R)std::rand() / (R)RAND_MAX * scale + min;
+			values[i] = (R)std::rand() / (R)RAND_MAX;
+			values[i] = (values[i] * scale) + min;
 		}
 	}
 
