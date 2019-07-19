@@ -131,8 +131,6 @@ namespace fnn {
 	  
 	R NeuralNetwork::Cost_Function(const ExMatrix& label) const {
 		ExMatrix result;
-		(Loss_Function(layer[num_layers - 1]->getActiveValue(), label)).sum(result, 1);
-		assert(result.getSize() == 1);
-		return result(0, 0) / label.getNColumns();
+		return (Loss_Function(layer[num_layers - 1]->getActiveValue(), label)).average();
 	}
 }

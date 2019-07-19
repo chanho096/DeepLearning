@@ -7,7 +7,7 @@ namespace actf {
 	}
 
 	R dReLU(const R& x) {
-		if (x > (R)0) return x;
+		if (x > (R)0) return 1;
 		return (R)0;
 	}
 

@@ -31,3 +31,5 @@ protected:
 	void Layer_Initialize();
 	void Weight_Initialize();
 };
+
+int Test_FNN_Learning();
