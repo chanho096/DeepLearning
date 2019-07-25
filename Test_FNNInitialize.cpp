@@ -81,7 +81,7 @@ void FNN_Test::test_layerInit() {
 			continue;
 		}
 		tstw = layer[i]->getWeight();
-		cout << "Weight : " << tstw << endl << endl;
+		//cout << "Weight : " << tstw << endl << endl;
 		test_weightInit(i);
 
 		cout << "real average : " << tstw.average() << endl;
@@ -135,7 +135,7 @@ void FNN_Test_Sigmoid::Weight_Initialize() {
 
 int Test_FNN_Learning() {
 	const int num_layers = 3;
-	const int num_neurons = 8;
+	const int num_neurons = 2;
 
 	const int num_train = 1000;
 	const int num_test = 10000;
@@ -150,7 +150,7 @@ int Test_FNN_Learning() {
 	R ratio_test, ratio_train;
 
 	//system("cls");
-	srand((unsigned int)0);
+	srand((unsigned int)time(NULL));
 
 	// Initialize
 	hp.initialize(num_layers);
@@ -163,23 +163,23 @@ int Test_FNN_Learning() {
 	train_input.randomize(); test_input.randomize();
 	for (int i = 0; i < num_train; ++i) {
 		if (train_input(0, i) < threshold) {
-			train_label(0, i) = 1;
-			train_label(1, i) = 0;
+			train_label(0, i) = 1.0;
+			train_label(1, i) = 0.0;
 		}
 		else {
-			train_label(0, i) = 0;
-			train_label(1, i) = 1;
+			train_label(0, i) = 0.0;
+			train_label(1, i) = 1.0;
 		}
 	}
 
 	for (int i = 0; i < num_test; ++i) {
 		if (test_input(0, i) < threshold) {
-			test_label(0, i) = 1;
-			test_label(1, i) = 0;
+			test_label(0, i) = 1.0;
+			test_label(1, i) = 0.0;
 		}
 		else {
-			test_label(0, i) = 0;
-			test_label(1, i) = 1;
+			test_label(0, i) = 0.0;
+			test_label(1, i) = 1,0;
 		}
 	}
 

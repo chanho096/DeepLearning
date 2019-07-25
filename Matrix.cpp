@@ -5,7 +5,7 @@ namespace alg {
 	void Matrix::initialize() {
 		assert(values != nullptr);
 		for (int i = 0; i < size; ++i) {
-			values[i] = (R)0;
+			values[i] = (R)0.0;
 		}
 	}
 
@@ -50,7 +50,7 @@ namespace alg {
 
 	void Matrix::reverse() {
 		for (int i = 0; i < size; ++i)
-			values[i] = (R)1 / values[i];
+			values[i] = (R)1.0 / values[i];
 	}
 
 	void Matrix::transpose() {
@@ -99,7 +99,7 @@ namespace alg {
 
 			for (col = 0; col < result.num_cols; ++col) {
 				idx2 = idx1 + col;
-				result.values[idx2] = (R)0;
+				result.values[idx2] = (R)0.0;
 
 				for (dim = 0; dim < num_cols; ++dim) {
 					result.values[idx2] += values[tmp + dim] * trg.values[col + dim * trg.num_cols];
@@ -119,7 +119,7 @@ namespace alg {
 			for (col = 0; col < result.num_cols; ++col) {
 				idx2 = idx1 + col;
 				tmp2 = col * trg.num_cols;
-				result.values[idx2] = (R)0;
+				result.values[idx2] = (R)0.0;
 
 				for (dim = 0; dim < num_cols; ++dim) {
 					result.values[idx2] += values[tmp1 + dim] * trg.values[tmp2 + dim];
@@ -137,7 +137,7 @@ namespace alg {
 			idx1 = row * result.num_cols;
 			for (col = 0; col < result.num_cols; ++col) {
 				idx2 = idx1 + col;
-				result.values[idx2] = (R)0;
+				result.values[idx2] = (R)0.0;
 
 				for (dim = 0; dim < num_rows; ++dim) {
 					result.values[idx2] += values[row + dim * num_cols] * trg.values[col + dim * trg.num_cols];
@@ -249,7 +249,7 @@ namespace alg {
 	const Matrix Matrix::operator <= (const R& trg) const {
 		Matrix tmp;
 		tmp.initialize(num_rows, num_cols, false);
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i <= size; i++) {
 			if (values[i] <= trg)
 				tmp.values[i] = (R)true;
 			else
@@ -262,7 +262,7 @@ namespace alg {
 		Matrix tmp;
 		tmp.initialize(num_rows, num_cols, false);
 		for (int i = 0; i < size; i++) {
-			if (values[i] < trg)
+			if (values[i] > trg)
 				tmp.values[i] = (R)true;
 			else
 				tmp.values[i] = (R)false;
@@ -274,7 +274,7 @@ namespace alg {
 		Matrix tmp;
 		tmp.initialize(num_rows, num_cols, false);
 		for (int i = 0; i < size; i++) {
-			if (values[i] < trg)
+			if (values[i] >= trg)
 				tmp.values[i] = (R)true;
 			else
 				tmp.values[i] = (R)false;

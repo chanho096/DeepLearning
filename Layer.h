@@ -3,6 +3,7 @@
 #include "ActivationFunction.h"
 
 namespace fnn {
+
 	using alg::Matrix; using alg::ExMatrix;
 	using actf::ActfType;
 	class Layer {

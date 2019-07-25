@@ -4,18 +4,22 @@
 #include <cmath>
 
 namespace alg {
+	std::random_device ExMatrix::rd;
+	ExMatrix::engine ExMatrix::generator(rd());
+
 	void ExMatrix::randomize() {
-		//srand((unsigned int)time(NULL));
+		// uniform distribution
+		dis_uniform dis((R)0.0, (R)1.0);
 		for (int i = 0; i < size; ++i) {
-			values[i] = (R)std::rand() / (R)RAND_MAX;
+			values[i] = dis(generator);
 		}
 	}
 
-	void ExMatrix::randomize(const R& scale, const R& min) {
-		//srand((unsigned int)time(NULL));
+	void ExMatrix::randomize(const R& mean, const R& stddev) {
+		// normal distribution
+		dis_normal dis(mean, stddev);
 		for (int i = 0; i < size; ++i) {
-			values[i] = (R)std::rand() / (R)RAND_MAX;
-			values[i] = (values[i] * scale) + min;
+			values[i] = dis(generator);
 		}
 	}
 
@@ -24,13 +28,13 @@ namespace alg {
 	}
 
 	R ExMatrix::average() const {
-		R avg = R(0);
+		R avg = R(0.0);
 		for (int i = 0; i < size; ++i) avg += values[i];
 		return avg / size;
 	}
 
 	R ExMatrix::variance() const {
-		R var = R(0); R avg = average();
+		R var = R(0.0); R avg = average();
 		for (int i = 0; i < size; ++i) var += values[i] * values[i];
 		return (var / size) - (avg * avg);
 	}

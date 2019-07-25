@@ -12,14 +12,13 @@ namespace fnn {
 	}
 
 	void Layer::Xavier_Initialize(const R& fan_in, const R& fan_out) {
-		R tmp = sqrt((R)6.0 / (fan_in + fan_out));
-		w.randomize(tmp * 2, tmp * -1);
+		R stddev = sqrt((R)2.0 / (fan_in + fan_out));
+		w.randomize((R)0.0, stddev);
 	}
 
 	void Layer::He_Initialize(const R& fan_in) {
-		R tmp = sqrt((R)6.0 / fan_in);
-		w.randomize(tmp * 2, tmp * -1);
-
+		R stddev = sqrt((R)2.0 / fan_in);
+		w.randomize((R)0.0, stddev);
 	}
 
 	void Layer::Set_Input(const ExMatrix &input) {
@@ -33,7 +32,7 @@ namespace fnn {
 		assert(label.getNRows() == num_neurons);
 		assert(label.getNColumns() == f.getNColumns());
 		Layer::grad_z.copy(label);
-		grad_z.multiply((R)-1);
+		grad_z.multiply((R)-1.0);
 		grad_z.addition(f);
 		getGradientOfParameter(prev);
 	}
@@ -53,7 +52,7 @@ namespace fnn {
 	}
 
 	void Layer::Weight_Update(const R learning_rate) {
-		R alpha = learning_rate * -1;
+		R alpha = learning_rate * (R)-1.0;
 
 		grad_w.multiply(alpha);
 		w.addition(grad_w);
@@ -87,7 +86,7 @@ namespace fnn {
 		R m = (R)grad_z.getNColumns(); 
 		assert(grad_z.getNColumns() == prev->f.getNColumns()); 
 		
-		m = 1 / m;
+		m = (R)1.0 / m;
 		grad_z.productTransposed(prev->f, grad_w);
 		grad_z.sum(grad_b, 1);
 

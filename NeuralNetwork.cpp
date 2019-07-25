@@ -48,7 +48,7 @@ namespace fnn {
 		for (int i = 0; i < num_layers; ++i) layer[i] = new Layer();
 		for (int i = 1; i < num_layers; ++i) layer[i]->rebuild(hp.num_neurons[i], hp.num_neurons[i - 1]);
 		layer[0]->rebuild(hp.num_neurons[0], 0);
-
+		
 		// layer Initialize
 		Layer_Initialize();
 
@@ -70,7 +70,7 @@ namespace fnn {
 
 		if (getCost)
 			return Cost_Function(label);
-		return (R)0;
+		return (R)0.0;
 	}
 
 	const ExMatrix NeuralNetwork::activate(const ExMatrix& input) {
@@ -87,7 +87,7 @@ namespace fnn {
 
 	void NeuralNetwork::Layer_Initialize() {
 		// basic activation function : ReLU
-		for (int i = 0; i < num_layers - 1; ++i) layer[i]->setActf(ActfType::TReLU);
+		for (int i = 0; i < num_layers - 1; ++i) layer[i]->setActf(ActfType::TLReLU);
 	}
 
 	void NeuralNetwork::Weight_Initialize() {
